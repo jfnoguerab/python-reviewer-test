@@ -1,36 +1,26 @@
-import sys
-import config
-
 def main():
+    operations_count = 0
     ask_again = True
     while(ask_again):
-        if sys.version_info.major <= 2:
-            a = raw_input("Enter the numerator: ")
-            b = raw_input("Enter the denominator: ")
-        else:
-            a = input("Enter the numerator: ")
-            b = input("Enter the denominator: ")
+        a = input("Enter the numerator: ")
+        b = input("Enter the denominator: ")
         result = perform_division(a,b)
-        if result is not None:
+        if(result is not None):
+            operations_count += 1
             print(result)
-        if sys.version_info.major <= 2:
-            ask_again = raw_input("Do you want to perform another operation? Enter yes or no: ")
-        else:
             ask_again = input("Do you want to perform another operation? Enter yes or no: ")
-        if(ask_again == 'yes'):
-            ask_again = True
-        else:
-            ask_again = False
-            print("You performed " + str(config.operations_count) + " operations, bye!")
-
-def perform_division(a: int,b: int):
+            if(ask_again == 'yes'):
+                ask_again = True
+            else:
+                ask_again = False
+                print("You performed " + str(operations_count) + " operations, bye!")
+def perform_division(a,b):
     try:
-        config.operations_count += 1
         return int(a)/int(b)
-    except ZeroDivisionError as e:
-        print("Error: Cannot divide by zero")
-    except Exception:
-        print("An error occurred, remember only numbers are allowed!")
-        pass
+    except ZeroDivisionError as error:
+        print("Looks like you are trying to divide by zero! This is not possible.")
+    except Exception as error:
+        print("Invalid numbers.")
+
 
 main()
